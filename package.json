@@ -1,18 +1,16 @@
 {
-  "name": "game",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "balls-game",
+  "version": "0.1.0",
+  "description": "-",
+  "source": "src/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel",
+    "build": "parcel build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@pixi/interaction": "^6.5.10",
-    "@timohausmann/quadtree-js": "^1.2.6",
-    "parcel": "^2.11.0",
-    "three": "^0.160.0"
+    "parcel": "^2.11.0"
   },
   "dependencies": {
     "pixi.js": "^7.3.3"
