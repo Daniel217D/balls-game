@@ -15,6 +15,9 @@ export default function () {
         antialias: true
     });
 
+    const wallsGroup = new Group(app);
+    const ballsGroup = new Group(app);
+
     window.addEventListener('resize', function updateCanvasSize() {
         app.renderer.resize(window.innerWidth, window.innerHeight);
         quadtree.width = app.renderer.width;
@@ -31,24 +34,22 @@ export default function () {
             -2
         )
 
-        group.addShape(ball)
+        ballsGroup.addShape(ball)
         app.stage.addChild(ball.renderObject)
     });
 
     document.body.appendChild(app.view);
 
-    const group = new Group(app);
+    wallsGroup.addShape(new WallRectangle(0, 30, app.renderer.width, 10, 0x00FF00));
+    wallsGroup.addShape(new WallRectangle(30, 0, 10, app.renderer.height, 0x00FF00));
+    wallsGroup.addShape(new WallRectangle(0, app.renderer.height - 30, app.renderer.width, 10, 0x00FF00));
+    wallsGroup.addShape(new WallRectangle(app.renderer.width - 30, 0, 10, app.renderer.height, 0x00FF00));
+    wallsGroup.addShape(new CircleWall(app.renderer.width / 2, app.renderer.height / 2, 100, 0x00FF00));
 
-    group.addShape(new WallRectangle(0, 30, app.renderer.width, 10, 0x00FF00));
-    group.addShape(new WallRectangle(30, 0, 10, app.renderer.height, 0x00FF00));
-    group.addShape(new WallRectangle(0, app.renderer.height - 30, app.renderer.width, 10, 0x00FF00));
-    group.addShape(new WallRectangle(app.renderer.width - 30, 0, 10, app.renderer.height, 0x00FF00));
-    group.addShape(new CircleWall(app.renderer.width / 2, app.renderer.height / 2, 100, 0x00FF00));
-
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 500; i++) {
         const size = Math.random() * 4 + 4;
 
-        group.addShape(new Ball(
+        ballsGroup.addShape(new Ball(
             Math.random() * (app.renderer.width - 200) + 100,
             Math.random() * (app.renderer.height - 200) + 100,
             size,
@@ -67,6 +68,8 @@ export default function () {
 
     app.ticker.maxFPS = 60;
     app.ticker.add(() => {
+        const group = new Group(app, [...wallsGroup.shapes, ...ballsGroup.shapes])
+
         group.update();
         handleCollisions(quadtree, group);
     });
