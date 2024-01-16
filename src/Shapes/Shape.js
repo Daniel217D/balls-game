@@ -10,6 +10,16 @@ export default class Shape {
         this.color = color;
     }
 
+    setX(x) {
+        this.x = x;
+        this.renderObject.x = x;
+    }
+
+    setY(y) {
+        this.y = y;
+        this.renderObject.y = y;
+    }
+
     update() {
         if(!this.movable) {
             this.dx = 0;
