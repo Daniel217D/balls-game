@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 import Shape from "./Shape";
 
 export default class Ball extends Shape {

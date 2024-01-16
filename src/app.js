@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import {Application as PixiApplication} from 'pixi.js';
 import Quadtree from '@timohausmann/quadtree-js';
 
 import Ball from "./Shapes/Ball";
@@ -9,7 +9,7 @@ import WallRectangle from "./Shapes/WallRectangle";
 import CircleWall from "./Shapes/CircleWall";
 
 export default function () {
-    const app = new PIXI.Application({
+    const app = new PixiApplication({
         width: window.innerWidth,
         height: window.innerHeight,
         antialias: true
