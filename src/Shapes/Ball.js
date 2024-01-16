@@ -13,7 +13,8 @@ export default class Ball extends Shape {
     }
 
     prepareRenderObject() {
-        this.renderObject = new PIXI.Graphics();
+        super.prepareRenderObject();
+
         this.renderObject.beginFill(this.color);
         this.renderObject.drawCircle(0, 0, this.radius);
         this.renderObject.endFill();

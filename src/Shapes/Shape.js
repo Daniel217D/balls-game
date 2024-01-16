@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 export default class Shape {
     type = '';
     movable = true;
@@ -38,7 +40,7 @@ export default class Shape {
 
     //override
     prepareRenderObject() {
-        this.renderObject = {}
+        this.renderObject = new PIXI.Graphics();
     }
 
     getQuadtreeData() {

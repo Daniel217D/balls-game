@@ -14,7 +14,8 @@ export default class Rectangle extends Shape {
     }
 
     prepareRenderObject() {
-        this.renderObject = new PIXI.Graphics();
+        super.prepareRenderObject();
+
         this.renderObject.beginFill(this.color);
         this.renderObject.drawRect(0, 0, this.width, this.height);
         this.renderObject.endFill();
