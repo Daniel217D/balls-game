@@ -3,11 +3,10 @@ import Quadtree from '@timohausmann/quadtree-js';
 
 import Ball from "./Shapes/Ball";
 import Group from './Shapes/Group';
-import Rectangle from "./Shapes/Rectangle";
 
 import handleCollisions from "./collisions";
-import Wall from "./Shapes/Wall";
-import Shape from "./Shapes/Shape";
+import WallRectangle from "./Shapes/WallRectangle";
+import CircleWall from "./Shapes/CircleWall";
 
 export default function () {
     const app = new PIXI.Application({
@@ -40,10 +39,11 @@ export default function () {
 
     const group = new Group(app);
 
-    group.addShape(new Wall(0, 30, app.renderer.width, 10, 0x00FF00));
-    group.addShape(new Wall(30, 0, 10, app.renderer.height, 0x00FF00));
-    group.addShape(new Wall(0, app.renderer.height - 30, app.renderer.width, 10, 0x00FF00));
-    group.addShape(new Wall(app.renderer.width - 30, 0, 10, app.renderer.height, 0x00FF00));
+    group.addShape(new WallRectangle(0, 30, app.renderer.width, 10, 0x00FF00));
+    group.addShape(new WallRectangle(30, 0, 10, app.renderer.height, 0x00FF00));
+    group.addShape(new WallRectangle(0, app.renderer.height - 30, app.renderer.width, 10, 0x00FF00));
+    group.addShape(new WallRectangle(app.renderer.width - 30, 0, 10, app.renderer.height, 0x00FF00));
+    group.addShape(new CircleWall(app.renderer.width / 2, app.renderer.height / 2, 100, 0x00FF00));
 
     for (let i = 0; i < 100; i++) {
         const size = Math.random() * 4 + 4;
