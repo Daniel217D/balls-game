@@ -13,26 +13,19 @@ export default class Rectangle extends Shape {
         this.prepareRenderObject()
     }
 
-    update() {
-        super.update();
-
-        this.renderObject.x = this.x - this.width / 2
-        this.renderObject.y = this.y - this.height / 2;
-    }
-
     prepareRenderObject() {
         this.renderObject = new PIXI.Graphics();
         this.renderObject.beginFill(this.color);
         this.renderObject.drawRect(0, 0, this.width, this.height);
         this.renderObject.endFill();
-        this.renderObject.x = this.x - this.width / 2
-        this.renderObject.y = this.y - this.height / 2;
+        this.renderObject.x = this.x
+        this.renderObject.y = this.y;
     }
 
     getQuadtreeData() {
         return {
-            x: this.x - this.width / 2,
-            y: this.y - this.height / 2,
+            x: this.x,
+            y: this.y,
             width: this.width,
             height: this.height,
             shape: this
