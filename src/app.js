@@ -40,17 +40,17 @@ export default function () {
 
     const group = new Group(app);
 
-    group.addShape(new Wall(app.renderer.width / 2, 30, app.renderer.width, 10, 0x00FF00));
-    group.addShape(new Wall(30, app.renderer.height / 2, 10, app.renderer.height, 0x00FF00));
-    group.addShape(new Wall(app.renderer.width / 2, app.renderer.height - 30, app.renderer.width, 10, 0x00FF00));
-    group.addShape(new Wall(app.renderer.width - 30, app.renderer.height / 2, 10, app.renderer.height, 0x00FF00));
+    group.addShape(new Wall(0, 30, app.renderer.width, 10, 0x00FF00));
+    group.addShape(new Wall(30, 0, 10, app.renderer.height, 0x00FF00));
+    group.addShape(new Wall(0, app.renderer.height - 30, app.renderer.width, 10, 0x00FF00));
+    group.addShape(new Wall(app.renderer.width - 30, 0, 10, app.renderer.height, 0x00FF00));
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 100; i++) {
         const size = Math.random() * 4 + 4;
 
         group.addShape(new Ball(
-            Math.random() * (app.renderer.width - 100) + 50,
-            Math.random() * (app.renderer.height - 100) + 50,
+            Math.random() * (app.renderer.width - 200) + 100,
+            Math.random() * (app.renderer.height - 200) + 100,
             size,
             0xFF0000,
             (Math.random() - 0.5) * 5,
