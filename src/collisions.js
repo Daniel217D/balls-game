@@ -15,7 +15,7 @@ export default function handleCollisions(quadtree, group) {
             const otherShape = collider.shape;
 
             if (otherShape !== shape) {
-                if(!shape.movable && !otherShape.movable){
+                if (!shape.movable && !otherShape.movable) {
                     return;
                 }
 
@@ -24,10 +24,10 @@ export default function handleCollisions(quadtree, group) {
                 } else if (shape.type === 'rectangle' && otherShape.type === 'rectangle') {
                     handleRectangleRectangleCollision(shape, otherShape)
                 } else if ((shape.type === 'rectangle' && otherShape.type === 'ball') || (shape.type === 'ball' && otherShape.type === 'rectangle')) {
-                    if(shape.type === 'ball') {
+                    if (shape.type === 'ball') {
                         handleBallRectangleCollision(shape, otherShape)
                     } else {
-                        handleBallRectangleCollision(otherShape,shape)
+                        handleBallRectangleCollision(otherShape, shape)
                     }
                 }
             }
@@ -35,6 +35,11 @@ export default function handleCollisions(quadtree, group) {
     });
 }
 
+/**
+ *
+ * @param {Ball} ball
+ * @param {Ball} otherBall
+ */
 function handleBallBallCollision(ball, otherBall) {
     const distance = Math.sqrt((otherBall.x - ball.x) ** 2 + (otherBall.y - ball.y) ** 2);
     const sumRadii = ball.radius + otherBall.radius;
@@ -54,14 +59,19 @@ function handleBallBallCollision(ball, otherBall) {
         otherBall.dx -= dotProduct * normalX;
         otherBall.dy -= dotProduct * normalY;
 
-        ball.x -= Math.cos(angle) * (overlap / 2);
-        ball.y -= Math.sin(angle) * (overlap / 2);
+        ball.setX(ball.x - Math.cos(angle) * (overlap / 2));
+        ball.setY(ball.y - Math.sin(angle) * (overlap / 2));
 
-        otherBall.x += Math.cos(angle) * (overlap / 2);
-        otherBall.y += Math.sin(angle) * (overlap / 2);
+        otherBall.setX(otherBall.x + Math.cos(angle) * (overlap / 2));
+        otherBall.setY(otherBall.y + Math.sin(angle) * (overlap / 2));
     }
 }
 
+/**
+ *
+ * @param {Rectangle} rectangle
+ * @param {Rectangle} otherRectangle
+ */
 function handleRectangleRectangleCollision(rectangle, otherRectangle) {
     const distanceX = Math.abs(otherRectangle.x - rectangle.x);
     const distanceY = Math.abs(otherRectangle.y - rectangle.y);
@@ -77,14 +87,14 @@ function handleRectangleRectangleCollision(rectangle, otherRectangle) {
     if (overlapX > 0 && overlapY > 0) {
         if (overlapX <= overlapY) {
             if (otherRectangle.x - rectangle.x > 0) {
-                rectangle.x -= overlapX / 2;
-                otherRectangle.x += overlapX / 2;
+                rectangle.setX(rectangle.x - overlapX);
+                otherRectangle.setX(otherRectangle.x + overlapX);
             } else {
-                rectangle.x += overlapX / 2;
-                otherRectangle.x -= overlapX / 2;
+                rectangle.setX(rectangle.x + overlapX);
+                otherRectangle.setX(otherRectangle.x - overlapX);
             }
 
-            const dotProduct = (otherRectangle.dx - rectangle.dx) / overlapX;
+            const dotProduct = otherRectangle.dx - rectangle.dx;
 
             rectangle.dx += dotProduct;
             otherRectangle.dx -= dotProduct;
@@ -92,17 +102,17 @@ function handleRectangleRectangleCollision(rectangle, otherRectangle) {
 
         if (overlapX >= overlapY) {
             if (otherRectangle.y - rectangle.y > 0) {
-                rectangle.y -= overlapY / 2;
-                otherRectangle.y += overlapY / 2;
+                rectangle.setY(rectangle.y - overlapY)
+                otherRectangle.setY(otherRectangle.y + overlapY);
             } else {
-                rectangle.y += overlapY / 2;
-                otherRectangle.y -= overlapY / 2;
+                rectangle.setY(rectangle.y + overlapY)
+                otherRectangle.setY(otherRectangle.y - overlapY);
             }
 
-            const dotProduct = (otherRectangle.dy - rectangle.dy) / overlapY;
+            const dotProduct = otherRectangle.dy - rectangle.dy;
 
-            rectangle.dy += dotProduct;
-            otherRectangle.dy -= dotProduct;
+            rectangle.dy + dotProduct;
+            otherRectangle.dy - dotProduct;
         }
     }
 }
@@ -113,8 +123,8 @@ function handleRectangleRectangleCollision(rectangle, otherRectangle) {
  * @param {Rectangle} rectangle
  */
 function handleBallRectangleCollision(ball, rectangle) {
-    const closestX = clamp(ball.x, rectangle.x - rectangle.width / 2, rectangle.x + rectangle.width / 2);
-    const closestY = clamp(ball.y, rectangle.y - rectangle.height / 2, rectangle.y + rectangle.height / 2);
+    const closestX = clamp(ball.x, rectangle.x, rectangle.x + rectangle.width);
+    const closestY = clamp(ball.y, rectangle.y, rectangle.y + rectangle.height);
 
     const distanceX = ball.x - closestX;
     const distanceY = ball.y - closestY;
@@ -128,8 +138,8 @@ function handleBallRectangleCollision(ball, rectangle) {
             const normalX = distanceX / distance;
             const normalY = distanceY / distance;
 
-            ball.x += overlap * normalX;
-            ball.y += overlap * normalY;
+            ball.setX(ball.x + overlap * normalX);
+            ball.setY(ball.y + overlap * normalY);
 
             const relativeVelocityX = rectangle.dx - ball.dx;
             const relativeVelocityY = rectangle.dy - ball.dy;
@@ -140,6 +150,8 @@ function handleBallRectangleCollision(ball, rectangle) {
 
             rectangle.dx -= dotProduct * normalX;
             rectangle.dy -= dotProduct * normalY;
+        } else {
+            console.error('zero distance at handleBallRectangleCollision')
         }
     }
 }
