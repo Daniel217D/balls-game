@@ -7,9 +7,14 @@ import Rectangle from "./Shapes/Rectangle";
 
 import handleCollisions from "./collisions";
 import Wall from "./Shapes/Wall";
+import Shape from "./Shapes/Shape";
 
 export default function () {
-    const app = new PIXI.Application({width: window.innerWidth, height: window.innerHeight});
+    const app = new PIXI.Application({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        antialias: true
+    });
 
     window.addEventListener('resize', function updateCanvasSize() {
         app.renderer.resize(window.innerWidth, window.innerHeight);
