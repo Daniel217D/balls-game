@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@timohausmann/quadtree-js": "^1.2.6",
     "parcel": "^2.11.0"
   },
   "dependencies": {
