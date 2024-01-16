@@ -54,16 +54,19 @@ function handleBallBallCollision(ball, otherBall) {
         const relativeVelocityY = otherBall.dy - ball.dy;
         const dotProduct = (relativeVelocityX * normalX) + (relativeVelocityY * normalY);
 
-        ball.dx += dotProduct * normalX;
-        ball.dy += dotProduct * normalY;
-        otherBall.dx -= dotProduct * normalX;
-        otherBall.dy -= dotProduct * normalY;
+        if (ball.movable) {
+            ball.dx += dotProduct * normalX;
+            ball.dy += dotProduct * normalY;
+            ball.setX(ball.x - Math.cos(angle) * (overlap / (otherBall.movable ? 2 : 1)));
+            ball.setY(ball.y - Math.sin(angle) * (overlap / (otherBall.movable ? 2 : 1)));
+        }
 
-        ball.setX(ball.x - Math.cos(angle) * (overlap / 2));
-        ball.setY(ball.y - Math.sin(angle) * (overlap / 2));
-
-        otherBall.setX(otherBall.x + Math.cos(angle) * (overlap / 2));
-        otherBall.setY(otherBall.y + Math.sin(angle) * (overlap / 2));
+        if(otherBall.movable) {
+            otherBall.dx -= dotProduct * normalX;
+            otherBall.dy -= dotProduct * normalY;
+            otherBall.setX(otherBall.x + Math.cos(angle) * (overlap / (ball.movable ? 2 : 1)));
+            otherBall.setY(otherBall.y + Math.sin(angle) * (overlap / (ball.movable ? 2 : 1)));
+        }
     }
 }
 
@@ -138,18 +141,27 @@ function handleBallRectangleCollision(ball, rectangle) {
             const normalX = distanceX / distance;
             const normalY = distanceY / distance;
 
-            ball.setX(ball.x + overlap * normalX);
-            ball.setY(ball.y + overlap * normalY);
+            if (rectangle.movable && ball.movable) {
+                ball.setX(ball.x + overlap * normalX);
+                ball.setY(ball.y + overlap * normalY);
 
-            const relativeVelocityX = rectangle.dx - ball.dx;
-            const relativeVelocityY = rectangle.dy - ball.dy;
-            const dotProduct = (relativeVelocityX * normalX) + (relativeVelocityY * normalY);
+                const relativeVelocityX = rectangle.dx - ball.dx;
+                const relativeVelocityY = rectangle.dy - ball.dy;
+                const dotProduct = (relativeVelocityX * normalX) + (relativeVelocityY * normalY);
 
-            ball.dx += dotProduct * normalX;
-            ball.dy += dotProduct * normalY;
+                ball.dx += dotProduct * normalX;
+                ball.dy += dotProduct * normalY;
 
-            rectangle.dx -= dotProduct * normalX;
-            rectangle.dy -= dotProduct * normalY;
+                rectangle.dx -= dotProduct * normalX;
+                rectangle.dy -= dotProduct * normalY;
+            } else if (ball.movable) {
+                ball.setX(ball.x + overlap * normalX);
+                ball.setY(ball.y + overlap * normalY);
+
+                const dotProduct = (ball.dx * normalX) + (ball.dy * normalY);
+                ball.dx -= 2 * dotProduct * normalX;
+                ball.dy -= 2 * dotProduct * normalY;
+            }
         } else {
             console.error('zero distance at handleBallRectangleCollision')
         }
