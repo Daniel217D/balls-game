@@ -134,7 +134,7 @@ function handleBallRectangleCollision(ball, rectangle) {
     const distanceSquared = distanceX ** 2 + distanceY ** 2;
 
     if (distanceSquared < ball.radius ** 2) {
-        const distance = Math.sqrt(distanceSquared);
+        const distance = Math.sqrt(distanceSquared) || 1; //ToDo find better solution and remove `|| 1`
         const overlap = ball.radius - distance;
 
         if (distance !== 0) {
