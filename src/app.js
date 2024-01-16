@@ -60,14 +60,9 @@ export default function () {
         height: app.renderer.height
     });
 
-    let lastFrameTime = Date.now();
+    app.ticker.maxFPS = 60;
     app.ticker.add(() => {
-        if (Date.now() - lastFrameTime < (1000 / 60)) {
-            return;
-        }
-        lastFrameTime = Date.now();
-
-        handleCollisions(quadtree, group);
         group.update();
+        handleCollisions(quadtree, group);
     });
 }
