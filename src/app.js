@@ -40,28 +40,15 @@ export default function () {
 
     document.body.appendChild(app.view);
 
-    wallsGroup.addShape(new WallRectangle(0, 30, app.renderer.width, 10, 0x00FF00));
-    wallsGroup.addShape(new WallRectangle(30, 0, 10, app.renderer.height, 0x00FF00));
-    wallsGroup.addShape(new WallRectangle(0, app.renderer.height - 30, app.renderer.width, 10, 0x00FF00));
-    wallsGroup.addShape(new WallRectangle(app.renderer.width - 30, 0, 10, app.renderer.height, 0x00FF00));
-
-    // wallsGroup.addShape(new WallRectangle(35, 130, 500, 10, 0x00FF00).rotate(35));
-    // wallsGroup.addShape(new WallRectangle(app.renderer.width - 25, 140, 500, 10, 0x00FF00).rotate(145));
-
-    // ballsGroup.addShape(new Ball(
-    //     50,
-    //     50,
-    //     20,
-    //     0xFF0000,
-    //     3,
-    //     0
-    // ))
+    wallsGroup.addShape(new WallRectangle(0, 0, app.renderer.width, 40, 0x00FF00));
+    wallsGroup.addShape(new WallRectangle(0, 0, 40, app.renderer.height, 0x00FF00));
+    wallsGroup.addShape(new WallRectangle(0, app.renderer.height - 30, app.renderer.width, 40, 0x00FF00));
+    wallsGroup.addShape(new WallRectangle(app.renderer.width - 30, 0, 40, app.renderer.height, 0x00FF00));
 
     wallsGroup.addShape(new CircleWall(app.renderer.width / 2, app.renderer.height / 2, 100, 0x00FF00));
 
-    for (let i = 0; i < 1000; i++) {
-        const size = Math.random() * 4 + 4;
-        // const size = 20;
+    for (let i = 0; i < 20; i++) {
+        const size = 20;
 
         ballsGroup.addShape(new Ball(
             Math.random() * (app.renderer.width - 200) + 100,
@@ -85,9 +72,9 @@ export default function () {
         const group = new Group(app, [...wallsGroup.shapes, ...ballsGroup.shapes])
 
         ballsGroup.each(shape => { //gravity
-            // shape.dy += 0.1;
-            // shape.dy *= 0.995;
-            // shape.dx *= 0.995;
+            shape.dy += 0.1;
+            shape.dy *= 0.995;
+            shape.dx *= 0.995;
         });
 
         group.update(); //dx, dy movement

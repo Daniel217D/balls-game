@@ -28,6 +28,9 @@ export default class Shape {
             this.dy = 0;
         }
 
+        this.dx = Math.min(Math.max(this.dx, -5), 5)
+        this.dy = Math.min(Math.max(this.dy, -5), 5)
+
         this.x += this.dx;
         this.y += this.dy;
 
