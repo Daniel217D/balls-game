@@ -1,7 +1,13 @@
 # Balls Game
 
-Pre-alfa version. 
+## Pre-alfa version. v0.\*.\*
 
-Pixi.js + [Quadtree](https://en.wikipedia.org/wiki/Quadtree)
+Pixi.js + Matter.js
 
-Try at [balls-game.ddaniel.ru](https://balls-game.ddaniel.ru)
+Developing...
+
+## Pre-alfa version. v0.2.0
+
+Pixi.js + [Quadtree](https://en.wikipedia.org/wiki/Quadtree) + Custom collisions
+
+Try at [balls-game.ddaniel.ru/v0.2.0/dist](https://balls-game.ddaniel.ru/v0.2.0/dist/)
