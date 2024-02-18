@@ -10,4 +10,3 @@ Developing...
 
 Pixi.js + [Quadtree](https://en.wikipedia.org/wiki/Quadtree) + Custom collisions
 
-Try at [balls-game.ddaniel.ru/v0.2.0/dist](https://balls-game.ddaniel.ru/v0.2.0/dist/)
